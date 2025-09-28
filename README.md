@@ -1,24 +1,14 @@
-# Example Next.js MCP Server
+# szhshp-next-mcp
 
-**Uses `mcp-handler`**
 
-## Usage
+- Reference
+  - [Vercel MCP Adapter](https://www.npmjs.com/package/mcp-handler)
+  - [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
 
-This sample app uses the [Vercel MCP Adapter](https://www.npmjs.com/package/mcp-handler) that allows you to drop in an MCP server on a group of routes in any Next.js project.
 
-Update `app/[transport]/route.ts` with your tools, prompts, and resources following the [MCP TypeScript SDK documentation](https://github.com/modelcontextprotocol/typescript-sdk/tree/main?tab=readme-ov-file#server).
+## Vercel 部署注意事项
 
-## Notes for running on Vercel
-
-- To use the SSE transport, requires a Redis attached to the project under `process.env.REDIS_URL` and toggling the `disableSse` flag to `false` in `app/mcp/route.ts`
-- Make sure you have [Fluid compute](https://vercel.com/docs/functions/fluid-compute) enabled for efficient execution
-- After enabling Fluid compute, open `app/route.ts` and adjust `maxDuration` to 800 if you using a Vercel Pro or Enterprise account
-- [Deploy the Next.js MCP template](https://vercel.com/templates/next.js/model-context-protocol-mcp-with-next-js)
-
-## Sample Client
-
-`script/test-client.mjs` contains a sample client to try invocations.
-
-```sh
-node scripts/test-client.mjs https://mcp-for-next-js.vercel.app
-```
+- 如需使用 SSE 传输，需在项目中配置 Redis（环境变量 `process.env.REDIS_URL`），并在 `app/mcp/route.ts` 中将 `disableSse` 设置为 `false`
+- 请确保已启用 [Fluid compute](https://vercel.com/docs/functions/fluid-compute) 以获得高效执行
+- 启用 Fluid compute 后，若为 Vercel Pro 或 Enterprise 账号，请在 `app/route.ts` 中将 `maxDuration` 调整为 800
+- [部署 Next.js MCP 模板](https://vercel.com/templates/next.js/model-context-protocol-mcp-with-next-js)
