@@ -2,7 +2,6 @@ export interface MetacriticGame {
   title: string
   score: number | null
   url: string
-  imageUrl?: string
 }
 
 export type MetacriticContent = MetacriticGame

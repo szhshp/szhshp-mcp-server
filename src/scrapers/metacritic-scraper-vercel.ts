@@ -79,15 +79,11 @@ export class MetacriticScraper {
         const link = $card.find('a').attr('href')
         const gameUrl = link ? `${this.baseUrl}${link}` : ''
 
-        // Extract image URL
-        const imageUrl = $card.find('img').attr('src')
-
         if (title) {
           games.push({
             title,
             score,
             url: gameUrl,
-            imageUrl,
           })
         }
       })
@@ -107,13 +103,11 @@ export class MetacriticScraper {
       const title = $('.product_title h1').text().trim()
       const scoreText = $('.metascore_w.large.game .metascore_anchor').text().trim()
       const score = scoreText ? parseInt(scoreText, 10) : null
-      const imageUrl = $('.product_image img').attr('src')
 
       return {
         title,
         score,
         url: gameUrl,
-        imageUrl,
       }
     } catch (error) {
       console.error(`Error scraping game ${gameUrl}:`, error)

@@ -41,3 +41,11 @@
 - 请确保已启用 [Fluid compute](https://vercel.com/docs/functions/fluid-compute) 以获得高效执行
 - 启用 Fluid compute 后, 若为 Vercel Pro 或 Enterprise 账号, 请在 `app/route.ts` 中将 `maxDuration` 调整为 800
 - [部署 Next.js MCP 模板](https://vercel.com/templates/next.js/model-context-protocol-mcp-with-next-js)
+
+
+
+## Debug
+
+```bash
+npx @modelcontextprotocol/inspector@latest http://localhost:3000
+```

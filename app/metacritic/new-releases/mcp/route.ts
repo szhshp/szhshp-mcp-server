@@ -21,7 +21,7 @@ const tool = createMcpHandler(
     )
   },
   {},
-  { basePath: '/metacritic/' }
+  { basePath: '/metacritic/new-releases/' }
 )
 
 export { tool as GET, tool as POST, tool as DELETE }

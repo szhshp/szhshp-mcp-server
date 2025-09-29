@@ -40,6 +40,48 @@ export class MetacriticScraper {
     )
   }
 
+  async scrapeSearch(query: string): Promise<MetacriticGame[] | null> {
+    try {
+      // Encode the query for URL path and replace spaces with %20
+      const encodedQuery = encodeURIComponent(query).replace(/%20/g, '%20')
+      const url = `${this.baseUrl}/search/${encodedQuery}/`
+      const html = await this.fetchPage(url)
+      const $ = cheerio.load(html)
+
+      // Find all search result items
+      const searchResults = $('[data-testid="search-result-item"]')
+      const games: MetacriticGame[] = []
+
+      searchResults.each((_, element) => {
+        const $item = $(element)
+
+        // Extract title from product-title
+        const title = $item.find('[data-testid="product-title"]').text().trim()
+
+        // Extract score from metascore
+        const scoreText = $item.find('[data-testid="product-metascore"] span').text().trim()
+        const score = scoreText ? parseInt(scoreText, 10) : null
+
+        // Extract URL
+        const href = $item.attr('href')
+        const gameUrl = href ? `${this.baseUrl}${href}` : ''
+
+        if (title) {
+          games.push({
+            title,
+            score,
+            url: gameUrl,
+          })
+        }
+      })
+
+      return games
+    } catch (error) {
+      console.error('Error scraping search results:', error)
+      return null
+    }
+  }
+
   async scrapeNewReleases(): Promise<MetacriticGame[] | null> {
     try {
       const url = `${this.baseUrl}/game`
@@ -79,15 +121,11 @@ export class MetacriticScraper {
         const link = $card.find('a').attr('href')
         const gameUrl = link ? `${this.baseUrl}${link}` : ''
 
-        // Extract image URL
-        const imageUrl = $card.find('img').attr('src')
-
         if (title) {
           games.push({
             title,
             score,
             url: gameUrl,
-            imageUrl,
           })
         }
       })
@@ -107,13 +145,11 @@ export class MetacriticScraper {
       const title = $('.product_title h1').text().trim()
       const scoreText = $('.metascore_w.large.game .metascore_anchor').text().trim()
       const score = scoreText ? parseInt(scoreText, 10) : null
-      const imageUrl = $('.product_image img').attr('src')
 
       return {
         title,
         score,
         url: gameUrl,
-        imageUrl,
       }
     } catch (error) {
       console.error(`Error scraping game ${gameUrl}:`, error)
