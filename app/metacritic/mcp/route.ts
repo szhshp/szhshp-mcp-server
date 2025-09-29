@@ -1,22 +1,27 @@
+import { MetacriticScraper } from '@/src/scrapers/metacritic-scraper'
 import { createMcpHandler } from 'mcp-handler'
-import { z } from 'zod'
 
-const handler = createMcpHandler(
-  (server) => {
+const handler = async (): Promise<{
+  content: Array<{ type: 'text'; text: string }>
+}> => {
+  const scraper = new MetacriticScraper()
+  const newReleases = await scraper.scrapeNewReleases()
+  return {
+    content: [{ type: 'text' as const, text: `New game releases: ${JSON.stringify(newReleases)}` }],
+  }
+}
+
+const tool = createMcpHandler(
+  (server: any) => {
     server.tool(
-      'roll_dice',
-      'Rolls an N-sided die',
-      { sides: z.number().int().min(2) },
-      async ({ sides }) => {
-        const value = 1 + Math.floor(Math.random() * sides)
-        return {
-          content: [{ type: 'text', text: `🎲 You rolled a ${value}!` }],
-        }
-      }
+      'fetch_metacritic_new_releases',
+      'Fetch the new game releases scores from Metacritic',
+      {},
+      handler
     )
   },
   {},
   { basePath: '/metacritic/' }
 )
 
-export { handler as GET, handler as POST, handler as DELETE }
+export { tool as GET, tool as POST, tool as DELETE }
