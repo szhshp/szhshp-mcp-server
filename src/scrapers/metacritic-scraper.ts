@@ -1,4 +1,3 @@
-import axios from 'axios'
 import * as cheerio from 'cheerio'
 import type { MetacriticGame, ScrapingOptions } from '../types/metacritic'
 
@@ -19,14 +18,12 @@ export class MetacriticScraper {
 
     for (let attempt = 0; attempt < this.options.retries; attempt++) {
       try {
-        const response = await axios.get(url, {
-          timeout: this.options.timeout,
-          headers: {
-            'User-Agent':
-              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-          },
-        })
-        return response.data
+        // Use fetch instead of axios since it works
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        return await response.text()
       } catch (error) {
         lastError = error as Error
         if (attempt < this.options.retries - 1) {
