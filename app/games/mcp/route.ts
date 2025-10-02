@@ -47,7 +47,7 @@ const handler = async (
 
 // StreamableHttp server
 const tool = createMcpHandler(
-  async (server: any) => {
+  async (server) => {
     server.tool(
       'game_tool',
       'Multi-purpose game tool for Epic/Steam free games and Metacritic data',
@@ -81,7 +81,7 @@ Example input (JSON):
     },
   },
   {
-    basePath: '/game/',
+    basePath: '/games/',
     verboseLogs: true,
     maxDuration: 60,
     disableSse: true,
