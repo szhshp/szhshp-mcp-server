@@ -8,7 +8,8 @@
 
 # Usage
 
-先跑起 Server: `npm run dev`
+先跑起 Server: `npm run dev` 或者 `vercel dev`
+
 
 
 ```json
@@ -47,5 +48,6 @@
 ## Debug
 
 ```bash
+# Inspector, 不太好用
 npx @modelcontextprotocol/inspector@latest http://localhost:3000
 ```
