@@ -51,3 +51,41 @@
 # Inspector, 不太好用
 npx @modelcontextprotocol/inspector@latest http://localhost:3000
 ```
+
+
+## MCP 
+
+配置起来很简单, 在 MCP 菜单添加配置, 然后就可以在对话中直接使用 Tools:
+
+```json
+"szhshp-mcp-game": {
+  "url": "http://mcp.szhshp.com/games/mcp"
+},
+```
+
+## Plugins
+
+只列出一些关键的 Plugins:
+
+### ai-reminder
+
+
+```sh
+/rmd ls # 列出当前群里面的 Reminder
+/rmdg ls {群号} # 列出特定群里面的 Reminder
+/rmdg ls 111111111 # 列出群 111111111 里面的 Reminder
+```
+
+
+```sh
+# 在群 222222222 中添加一个每天 21:50 执行 `MCP Tool: get_news` 并且参数是 thepaper 
+/rmdg command 222222222 /get_news--thepaper 21:50 daily 
+
+/rmdg command 333333333 /get_news--thepaper 11:00 daily
+/rmdg command 111111111 /get_news--thepaper 10:00 daily
+
+# 执行一次 `MCP Tool: game_tool` 并且参数是 freeGame_epic 
+/rmdg command 222222222 /game_tool--freeGame_epic 22:09
+/rmdg command 333333333 /game_tool--freeGame_epic 12:00 daily
+/rmdg rm 222222222 1
+```
