@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { MetacriticScraper } from '@/src/scrapers/metacritic-scraper'
 
 interface Context {
-  type: 'freeGame_epic' | 'newGame_metacritic' | 'search_metacritic'
+  type: 'freeGame_epic' | 'newGame_metacritic' | 'search_metacritic' | 'newGame_switch2'
   keyword?: string
 }
 
@@ -18,6 +18,15 @@ const handler = async (
       const data = await res.json()
       return {
         content: [{ type: 'text' as const, text: JSON.stringify(data) }],
+      }
+    }
+    case 'newGame_switch2': {
+      const scraper = new MetacriticScraper()
+      const newReleases = await scraper.scrapeNewSwich2Release()
+      return {
+        content: [
+          { type: 'text' as const, text: `New game releases: ${JSON.stringify(newReleases)}` },
+        ],
       }
     }
     case 'newGame_metacritic': {
@@ -52,16 +61,29 @@ const tool = createMcpHandler(
       'game_tool',
       'Multi-purpose game tool for Epic/Steam free games and Metacritic data',
       {
-        type: z.enum(['freeGame_epic', 'newGame_metacritic', 'search_metacritic']).describe(`
+        type: z
+          .enum(['freeGame_epic', 'newGame_metacritic', 'search_metacritic', 'newGame_switch2'])
+          .describe(`
 **Select the type of game tool to use.**
 
-- freeGame_epic: Get free Epic/Steam games 获取Epic喜加一游戏
-- newGame_metacritic: Fetch new game releases from Metacritic 获取Metacritic新游戏的评分
-- search_metacritic: Search for a game on Metacritic 在Metacritic上搜索游戏评分
+- freeGame_epic: 
+    - Get free Epic or Steam games
+    - 获取 Epic 或 Steam 免费游戏
+- newGame_metacritic: 
+    - Fetch new game releases from Metacritic
+    - 获取 Metacritic 新游戏及评分
+- search_metacritic: 
+    - Search for a game on Metacritic
+    - 在 Metacritic 上搜索游戏及评分
+- newGame_switch2: 
+    - Fetch new Nintendo Switch 2 game releases from Metacritic
+    - 获取 Switch 2 新游戏及评分
+    - 结果应该按照日期排序
 
 **Example:**
 Example input (JSON):
 { "type": "search_metacritic", "keyword": "cyberpunk" }
+
           `),
         keyword: z
           .string()

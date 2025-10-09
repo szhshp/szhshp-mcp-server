@@ -79,6 +79,57 @@ export class MetacriticScraper {
     }
   }
 
+  async scrapeNewSwich2Release(): Promise<MetacriticGame[] | null> {
+    try {
+      const url = `${this.baseUrl}/browse/game/nintendo-switch/all/all-time/new/?platform=nintendo-switch-2`
+      const html = await this.fetchPage(url)
+      const $ = cheerio.load(html)
+
+      // Find all game cards with data-testid="filter-results"
+      const gameCards = $('[data-testid="filter-results"]')
+      const games: MetacriticGame[] = []
+
+      gameCards.each((_, element) => {
+        const $card = $(element)
+
+        // Extract game name from the title heading
+        const title: string =
+          $card.find('[data-title]').attr('data-title') ||
+          $card.find('.c-finderProductCard_titleHeading span').text().trim()
+
+        // Extract score from the metascore span
+        const scoreText: string = $card.find('.c-siteReviewScore span').text().trim()
+        const score: number | null = scoreText ? parseInt(scoreText, 10) : null
+
+        // Extract release date from the meta section
+        const releaseDateText: string = $card
+          .find('.c-finderProductCard_meta span')
+          .first()
+          .text()
+          .trim()
+        const releaseDate: string | undefined = releaseDateText || undefined
+
+        // Extract URL from the link
+        const href: string | undefined = $card.find('a').attr('href')
+        const gameUrl: string = href ? `${this.baseUrl}${href}` : ''
+
+        if (title) {
+          games.push({
+            title,
+            score,
+            url: gameUrl,
+            releaseDate,
+          })
+        }
+      })
+
+      return games
+    } catch (error) {
+      console.error('Error scraping new Switch 2 release:', error)
+      return null
+    }
+  }
+
   async scrapeNewReleases(): Promise<MetacriticGame[] | null> {
     try {
       const url = `${this.baseUrl}/game`

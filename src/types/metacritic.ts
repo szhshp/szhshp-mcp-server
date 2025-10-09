@@ -2,6 +2,7 @@ export interface MetacriticGame {
   title: string
   score: number | null
   url: string
+  releaseDate?: string
 }
 
 export type MetacriticContent = MetacriticGame
