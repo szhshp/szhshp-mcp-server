@@ -23,7 +23,7 @@ const handler = async (
       searchQuery = `${prefix}:${encodeURIComponent(search_string)}`
     }
 
-    const url = `http://export.arxiv.org/api/query?search_query=${searchQuery}&start=0&max_results=${max_results}`
+    const url = `http://export.arxiv.org/api/query?search_query=${searchQuery}&start=0&max_results=${max_results}&sortBy=submittedDate&sortOrder=descending`
 
     const response = await fetch(url)
     if (!response.ok) {
@@ -97,7 +97,7 @@ const tool: ReturnType<typeof createMcpHandler> = createMcpHandler(
   async (server) => {
     server.tool(
       'arxiv_search',
-      'Search arXiv for academic papers using various search prefixes',
+      `Search arXiv for academic papers using various search prefixes`,
       {
         prefix: z.enum(['ti', 'au', 'abs', 'co', 'jr', 'cat', 'rn', 'id', 'all']).describe(`
 **Search prefix to use:**

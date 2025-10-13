@@ -68,17 +68,12 @@ const tool = createMcpHandler(
 
 - freeGame_epic: 
     - Get free Epic or Steam games
-    - 获取 Epic 或 Steam 免费游戏
 - newGame_metacritic: 
     - Fetch new game releases from Metacritic
-    - 获取 Metacritic 新游戏及评分
 - search_metacritic: 
     - Search for a game on Metacritic
-    - 在 Metacritic 上搜索游戏及评分
 - newGame_switch2: 
     - Fetch new Nintendo Switch 2 game releases from Metacritic
-    - 获取 Switch 2 新游戏及评分
-    - 结果应该按照日期排序
 
 **Example:**
 Example input (JSON):
