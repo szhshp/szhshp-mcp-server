@@ -108,6 +108,47 @@ const tool: ReturnType<typeof createMcpHandler> = createMcpHandler(
 - co: Comment
 - jr: Journal Reference
 - cat: Subject Category
+  - cat:cs: Computer Science
+    - cat:cs.AI: Artificial Intelligence
+    - cat:cs.AR: Hardware Architecture
+    - cat:cs.CC: Computational Complexity
+    - cat:cs.CE: Computational Engineering, Finance, and Science
+    - cat:cs.CG: Computational Geometry
+    - cat:cs.CL: Computation and Language
+    - cat:cs.CR: Cryptography and Security
+    - cat:cs.CV: Computer Vision and Pattern Recognition
+    - cat:cs.CY: Computers and Society
+    - cat:cs.DB: Databases
+    - cat:cs.DC: Distributed, Parallel, and Cluster Computing
+    - cat:cs.DL: Digital Libraries
+    - cat:cs.DM: Discrete Mathematics
+    - cat:cs.DS: Data Structures and Algorithms
+    - cat:cs.ET: Emerging Technologies
+    - cat:cs.FL: Formal Languages and Automata Theory
+    - cat:cs.GL: General Literature
+    - cat:cs.GR: Graphics
+    - cat:cs.GT: Computer Science and Game Theory
+    - cat:cs.HC: Human-Computer Interaction
+    - cat:cs.IR: Information Retrieval
+    - cat:cs.IT: Information Theory
+    - cat:cs.LG: Machine Learning
+    - cat:cs.LO: Logic in Computer Science
+    - cat:cs.MA: Multiagent Systems
+    - cat:cs.MM: Multimedia
+    - cat:cs.MS: Mathematical Software
+    - cat:cs.NA: Numerical Analysis
+    - cat:cs.NE: Neural and Evolutionary Computing
+    - cat:cs.NI: Networking and Internet Architecture
+    - cat:cs.OH: Other Computer Science
+    - cat:cs.OS: Operating Systems
+    - cat:cs.PF: Performance
+    - cat:cs.PL: Programming Languages
+    - cat:cs.RO: Robotics
+    - cat:cs.SC: Symbolic Computation
+    - cat:cs.SD: Sound
+    - cat:cs.SE: Software Engineering
+    - cat:cs.SI: Social and Information Networks
+    - cat:cs.SY: Systems and Control
 - rn: Report Number
 - id: Id (use id_list instead)
 - all: All of the above
